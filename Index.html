@@ -33,17 +33,17 @@
     </header>
 
     <!--Filter Section-->
-    <Section class="filter-section">
-        <Div class="filter-genre">
-        <label for="genre">Filter by:</label>
-        <select id="genre" name="genre">
-          <option value="all">All Genres</option>
-        </select>
-        <label for="sort"></label>
-        <select id="sort" name="sort">
-          <option value="Recent">Recently Updated</option>
-        </select>
-      </Div>
+      <section class="filters">
+    <label for="genre">Filter by:</label>
+    <div class="filter-row">
+      <select id="genre">
+        <option value="all">All Genres</option>
+      </select>
+      <select id="sort" aria-label="Sort podcasts">
+        <option value="recent">Recently Updated</option>
+      </select>
+    </div>
+  </section>
     
     <!--Podcast modal-->
 <div class="podcast-modal">
@@ -67,6 +67,29 @@
 
     <p class="updated" id="modalUpdated"></p>
   </div>
+
+   <div class="modal-info">
+        <h3>Description</h3>
+        <p id="modalDescription"></p>
+
+        <h3>Genre</h3>
+        <div id="modalGenres" class="tags"></div>
+
+        <p class="updated" id="modalUpdated"></p>
+      </div>
+
+      <h3 id="modalSectionTitle">Seasons</h3>
+      <div id="modalSeasons" class="season-list"></div>
+    </div>
+  </div>
 </div>
+
+    <!--Podcast Grid-->
+    <main>
+      <div id="podcast-grid" class="podcast-grid"></div>
+    </main>
+
+    <script src="scripts.js" type="module"></script>
+    <script src="modals.js" type="module"></script>
   </body>
 </html>
