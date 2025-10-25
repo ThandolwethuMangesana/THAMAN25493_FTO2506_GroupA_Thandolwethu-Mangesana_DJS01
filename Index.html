@@ -23,7 +23,7 @@
         </span>
       </div>
       <!--search Icon-->
-      <div>
+      <div class="--search-input">
         <i class="fa-solid fa-magnifying-glass"></i>
       </div>
       <!--user Icon-->
@@ -38,15 +38,35 @@
         <label for="genre">Filter by:</label>
         <select id="genre" name="genre">
           <option value="all">All Genres</option>
+        </select>
+        <label for="sort"></label>
+        <select id="sort" name="sort">
+          <option value="Recent">Recently Updated</option>
+        </select>
       </Div>
-        </div>
-        <div>
-          <label for="sort"></label>
-         <select id="sort">
-            <option value="Recent">Recently Updated</option>
-         </select>
-        </div>
     
     <!--Podcast modal-->
+<div class="podcast-modal">
+  <div class="modal-content">
+      <span class="close-button">&times;</span>
+
+      <h2 id="modalTitle"></h2>
+
+    <div id="modalCover" class="modal-cover"></div>
+
+
+    <div class="modal-info"></div>
+
+    <h3>Description</h3>
+
+    <p id="modalDescription"></p>
+
+    <h3>Genre</h3>
+
+    <div id="modalGenre" class="tags"></div>
+
+    <p class="updated" id="modalUpdated"></p>
+  </div>
+</div>
   </body>
 </html>
