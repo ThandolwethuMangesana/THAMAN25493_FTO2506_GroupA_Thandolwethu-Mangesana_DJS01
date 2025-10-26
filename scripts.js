@@ -86,4 +86,24 @@ function createCard(item, type = 'podcast') {
       className: 'cover',
       children: [createElement('img', { attrs: { src: item.image, alt: `${item.title} Cover` } })]
     });
- 
+  const title = createElement('h3', { content: item.title });
+    const meta = createElement('p', { className: 'meta', content: `📅 ${item.seasons} seasons` });
+    const tags = createTags(item.genres);
+    const updated = createElement('p', { className: 'updated', content: formatDate(item.updated) });
+
+      return createElement('div', {
+      className: 'card',
+      children: [cover, title, meta, tags, updated],
+      events: { click: () => openModal(item, 'podcast') }
+    });
+    } else {
+    const title = createElement('h3', { content: item.title });
+    const desc = createElement('p', { content: item.description });
+
+    return createElement('div', {
+      className: 'card genre-card',
+      children: [title, desc],
+      events: { click: () => openModal(item, 'genre') }
+    });
+  }
+}
