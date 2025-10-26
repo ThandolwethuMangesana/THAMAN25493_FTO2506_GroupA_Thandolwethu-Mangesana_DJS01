@@ -1,36 +1,25 @@
-import { podcasts } from './scripts.js';
-import { modal  from } './modals.js';
+import { podcasts, genres } from './data.js';
+import { Modal } from './modal.js';
 
-const grid = document.getElementById('podcast-grid');
-const genreFilter = document.getElementById('genre');
+const grid = document.getElementById('podcastGrid');
+const genreSelect = document.getElementById('genre');
+
 
 // Map genre IDs to titles
 const genreMap = {};
 genres.forEach(g => {
-    genreMap[g.id] = g.title;
+  genreMap[g.id] = g.title;
 });
 
 // set up modal
-const podcastModal = new modal('podcast-modal', {genreMap, podcasts});
+const podcastModal = new Modal('podcastModal', {genreMap, podcasts});
 
-/* change ISO date to readable format */
-function formatDate(isoString) {
-  const date = new Date(isoString);
-  const now = new Date();
-  const diff = Math.floor((now - date) / (1000 * 60 * 60 * 24));
-
-  if (diff === 0) return 'Updated today';
-  if (diff === 1) return 'Updated yesterday';
-  if (diff <= 30) return `Updated ${diff} days ago`;
-
-  return `Updated on ${date.toLocaleDateString('en-ZA', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric'
-  })};
-}
-
-/* create podcast cards */
+/**
+ * Creates a DOM element with specified options.
+ * @param {string} tag - HTML tag name.
+ * @param {Object} [options={}] - Element options: className, content, attributes, children, events.
+ * @returns {HTMLElement}
+ */
 function createElement(tag, options = {}) {
   const element = document.createElement(tag);
   if (options.className) element.className = options.className;
@@ -49,7 +38,20 @@ function createElement(tag, options = {}) {
   return element;
 }
 
-fun
+/* change ISO date to readable format */
+function formatDate(isoString) {
+  const date = new Date(isoString);
+  const now = new Date();
+  const diff = Math.floor((now - date) / (1000 * 60 * 60 * 24));
 
+  if (diff === 0) return 'Updated today';
+  if (diff === 1) return 'Updated yesterday';
+  if (diff <= 30) return `Updated ${diff} days ago`;
 
+  return `Updated on ${date.toLocaleDateString('en-ZA', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  })}`;
+}
 
