@@ -4,7 +4,6 @@ import { Modal } from './modals.js';
 const grid = document.getElementById('podcastGrid');
 const genreSelect = document.getElementById('genre');
 
-// Build a quick lookup map of genre IDs to their titles
 const genreMap = {};
 genres.forEach(g => {
   genreMap[g.id] = g.title;
@@ -42,11 +41,6 @@ function createElement(tag, options = {}) {
   return el;
 }
 
-/**
- * Formats an ISO date string into a human-friendly "Updated X days ago" style.
- * @param {string} isoString - ISO date string.
- * @returns {string} A formatted relative or absolute date string.
- */
 function formatDate(isoString) {
   const date = new Date(isoString);
   const now = new Date();
@@ -63,11 +57,6 @@ function formatDate(isoString) {
   })}`;
 }
 
-/**
- * Creates a container of genre tags for a podcast.
- * @param {number[]} genreIds - Array of genre IDs.
- * @returns {HTMLElement} A div containing span tags for each genre.
- */
 function createTags(genreIds = []) {
   const tagContainer = createElement('div', { className: 'tags' });
   genreIds.forEach(id => {
@@ -148,9 +137,6 @@ function filterByGenre(items, genreId) {
   return items.filter(item => item.genres.includes(id));
 }
 
-/**
- * Populates the genre dropdown filter with available genres.
- */
 function populateGenreFilter() {
   genreSelect.innerHTML = `<option value="all">All Genres</option>`;
   genres.forEach(g => {
@@ -159,7 +145,6 @@ function populateGenreFilter() {
   });
 }
 
-// Handle genre filter changes
 genreSelect.addEventListener('change', (e) => {
   const filtered = filterByGenre(podcasts, e.target.value);
   renderItems(filtered, 'podcast');
