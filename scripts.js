@@ -1,44 +1,52 @@
-import { podcasts, genres } from './data.js';
-import { Modal } from './modal.js';
+import { podcasts, genres }  from './data.js';
+import { Modal } from './modals.js';
 
 const grid = document.getElementById('podcastGrid');
 const genreSelect = document.getElementById('genre');
 
-
-// Map genre IDs to titles
+// Build a quick lookup map of genre IDs to their titles
 const genreMap = {};
 genres.forEach(g => {
   genreMap[g.id] = g.title;
 });
 
-// set up modal
-const podcastModal = new Modal('podcastModal', {genreMap, podcasts});
+// Initialize the modal instance with podcast and genre data
+const podcastModal = new Modal('podcastModal', { genreMap, podcasts });
 
 /**
- * Creates a DOM element with specified options.
- * @param {string} tag - HTML tag name.
- * @param {Object} [options={}] - Element options: className, content, attributes, children, events.
- * @returns {HTMLElement}
+ * Utility to create a DOM element with optional configuration.
+ * @param {string} tag - The HTML tag name (e.g., 'div', 'p', 'h3').
+ * @param {Object} [options={}] - Options for the element.
+ * @param {string} [options.className] - CSS class names.
+ * @param {string} [options.content] - Inner HTML/text content.
+ * @param {Object} [options.attrs] - Attributes to set on the element.
+ * @param {HTMLElement[]} [options.children] - Child elements to append.
+ * @param {Object} [options.events] - Event listeners to attach.
+ * @returns {HTMLElement} The created DOM element.
  */
 function createElement(tag, options = {}) {
-  const element = document.createElement(tag);
-  if (options.className) element.className = options.className;
-  if (options.content) element.innerHTML = options.content;
-  if (options.attributes) {
-    for (const [key, value] of Object.entries(options.attributes)) {
-      element.setAttribute(key, value);
+  const el = document.createElement(tag);
+  if (options.className) el.className = options.className;
+  if (options.content) el.innerHTML = options.content;
+  if (options.attrs) {
+    for (const [key, value] of Object.entries(options.attrs)) {
+      el.setAttribute(key, value);
     }
   }
-  if (options.children) options.children.forEach(child => element.appendChild(child));
+  if (options.children) options.children.forEach(child => el.appendChild(child));
   if (options.events) {
     for (const [event, handler] of Object.entries(options.events)) {
-      element.addEventListener(event, handler);
+      el.addEventListener(event, handler);
     }
   }
-  return element;
+  return el;
 }
 
-/* change ISO date to readable format */
+/**
+ * Formats an ISO date string into a human-friendly "Updated X days ago" style.
+ * @param {string} isoString - ISO date string.
+ * @returns {string} A formatted relative or absolute date string.
+ */
 function formatDate(isoString) {
   const date = new Date(isoString);
   const now = new Date();
@@ -48,13 +56,18 @@ function formatDate(isoString) {
   if (diff === 1) return 'Updated yesterday';
   if (diff <= 30) return `Updated ${diff} days ago`;
 
-  return `Updated on ${date.toLocaleDateString('en-ZA', {
+  return `Updated on ${date.toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'short',
     day: 'numeric'
   })}`;
 }
 
+/**
+ * Creates a container of genre tags for a podcast.
+ * @param {number[]} genreIds - Array of genre IDs.
+ * @returns {HTMLElement} A div containing span tags for each genre.
+ */
 function createTags(genreIds = []) {
   const tagContainer = createElement('div', { className: 'tags' });
   genreIds.forEach(id => {
@@ -66,37 +79,37 @@ function createTags(genreIds = []) {
 }
 
 /**
- * open modals for podcast details
- * @param {Object} podcast - Podcast data object.
- * @param {'podcast'|'genre'} [type='podcast'] - Type of modal to open.
+ * Opens the modal with details for a podcast or genre.
+ * @param {Object} item - The podcast or genre object.
+ * @param {'podcast'|'genre'} [type='podcast'] - Type of item to display.
  */
 function openModal(item, type = 'podcast') {
   podcastModal.open(item, type === 'genre');
 }
 
 /**
- * create podcast card
- * @param {object} item - Podcast data object.
- * @returns {HTMLElement} - Podcast card element.
+ * Builds a card element for either a podcast or a genre.
+ * @param {Object} item - The podcast or genre data.
+ * @param {'podcast'|'genre'} [type='podcast'] - Type of card to create.
+ * @returns {HTMLElement} The card element.
  */
-
 function createCard(item, type = 'podcast') {
   if (type === 'podcast') {
     const cover = createElement('div', {
       className: 'cover',
       children: [createElement('img', { attrs: { src: item.image, alt: `${item.title} Cover` } })]
     });
-  const title = createElement('h3', { content: item.title });
+    const title = createElement('h3', { content: item.title });
     const meta = createElement('p', { className: 'meta', content: `📅 ${item.seasons} seasons` });
     const tags = createTags(item.genres);
     const updated = createElement('p', { className: 'updated', content: formatDate(item.updated) });
 
-      return createElement('div', {
+    return createElement('div', {
       className: 'card',
       children: [cover, title, meta, tags, updated],
       events: { click: () => openModal(item, 'podcast') }
     });
-    } else {
+  } else {
     const title = createElement('h3', { content: item.title });
     const desc = createElement('p', { content: item.description });
 
@@ -109,9 +122,9 @@ function createCard(item, type = 'podcast') {
 }
 
 /**
- * render list of items to the grid
- *  * @param {Object[]} items
- * @param {'podcast'|'genre'} [type='podcast']
+ * Renders a list of podcasts or genres into the grid.
+ * @param {Object[]} items - Array of items to render.
+ * @param {'podcast'|'genre'} [type='podcast'] - Type of items to render.
  */
 function renderItems(items, type = 'podcast') {
   grid.innerHTML = '';
@@ -123,15 +136,35 @@ function renderItems(items, type = 'podcast') {
 }
 
 /**
- * Filters podcasts by genre
- * @param {object[]} items
- * @param {string} genreId
- * @returns {object[]}
+ * Filters podcasts by a selected genre ID.
+ * @param {Object[]} items - Array of podcasts.
+ * @param {string} genreId - Genre ID or 'all'.
+ * @returns {Object[]} Filtered list of podcasts.
  */
-
 function filterByGenre(items, genreId) {
   if (genreId === 'all') return items;
   const id = Number(genreId);
   if (isNaN(id)) return items;
   return items.filter(item => item.genres.includes(id));
 }
+
+/**
+ * Populates the genre dropdown filter with available genres.
+ */
+function populateGenreFilter() {
+  genreSelect.innerHTML = `<option value="all">All Genres</option>`;
+  genres.forEach(g => {
+    const option = createElement('option', { content: g.title, attrs: { value: g.id } });
+    genreSelect.appendChild(option);
+  });
+}
+
+// Handle genre filter changes
+genreSelect.addEventListener('change', (e) => {
+  const filtered = filterByGenre(podcasts, e.target.value);
+  renderItems(filtered, 'podcast');
+});
+
+// Initialize the UI with genres and podcasts
+populateGenreFilter();
+renderItems(podcasts, 'podcast');
