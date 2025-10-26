@@ -55,3 +55,12 @@ function formatDate(isoString) {
   })}`;
 }
 
+function createTags(genreIds = []) {
+  const tagContainer = createElement('div', { className: 'tags' });
+  genreIds.forEach(id => {
+    const name = genreMap[id] || `Genre ${id}`;
+    const tag = createElement('span', { className: 'tag', content: name });
+    tagContainer.appendChild(tag);
+  });
+  return tagContainer;
+}
