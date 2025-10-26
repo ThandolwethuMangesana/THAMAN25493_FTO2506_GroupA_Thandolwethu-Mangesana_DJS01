@@ -14,61 +14,50 @@
     />
   </head>
   <body>
-    <!--app header-->
+    <!--app Header-->
     <header class="app-header">
-      <!--logo-->
-      <div class="logo">
-        <span>
-          <i class="fa-solid fa-microphone"></i> <strong>PodcastApp</strong>
-        </span>
-      </div>
-      <!--search Icon-->
-      <div class="--search-input">
-        <i class="fa-solid fa-magnifying-glass"></i>
-      </div>
-      <!--user Icon-->
-      <div>
-        <i class="fa-solid fa-user"></i>
-      </div>
-    </header>
+    <div class="logo">
+      <span>
+       <i class="fa-solid fa-microphone"></i> <strong>PodcastApp</strong>
+      </span>
+    </div>
+    <div class="search-input">
+      <input
+        type="text"
+        id="search"
+        aria-label="Search podcasts"
+      />
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </div>
+    <div class="user-icon"><i class='far fa-user-circle'></i>
+     
+    </div>
+  </header>
+
 
     <!--Filter Section-->
-      <section class="filters">
+    <section class="filters">
     <label for="genre">Filter by:</label>
     <div class="filter-row">
       <select id="genre">
         <option value="all">All Genres</option>
       </select>
-      <select id="sort" aria-label="Sort podcasts">
+      <select id="sort">
         <option value="recent">Recently Updated</option>
       </select>
     </div>
   </section>
     
     <!--Podcast modal-->
-<div class="podcast-modal">
-  <div class="modal-content">
-      <span class="close-button">&times;</span>
-
+<div id="podcastModal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      
       <h2 id="modalTitle"></h2>
 
-    <div id="modalCover" class="modal-cover"></div>
+      <div class="modal-cover" id="modalCover"></div>
 
-
-    <div class="modal-info"></div>
-
-    <h3>Description</h3>
-
-    <p id="modalDescription"></p>
-
-    <h3>Genre</h3>
-
-    <div id="modalGenre" class="tags"></div>
-
-    <p class="updated" id="modalUpdated"></p>
-  </div>
-
-   <div class="modal-info">
+      <div class="modal-info">
         <h3>Description</h3>
         <p id="modalDescription"></p>
 
@@ -82,14 +71,9 @@
       <div id="modalSeasons" class="season-list"></div>
     </div>
   </div>
-</div>
 
-    <!--Podcast Grid-->
-    <main>
-      <div id="podcast-grid" class="podcast-grid"></div>
-    </main>
+  <section id="podcastGrid" class="grid"></section>
 
-    <script src="scripts.js" type="module"></script>
-    <script src="modals.js" type="module"></script>
+  <script type="module" src="scripts.js"></script>
   </body>
 </html>
