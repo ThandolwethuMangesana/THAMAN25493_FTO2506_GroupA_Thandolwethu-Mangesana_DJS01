@@ -121,3 +121,17 @@ function renderItems(items, type = 'podcast') {
   }
   items.forEach(item => grid.appendChild(createCard(item, type)));
 }
+
+/**
+ * Filters podcasts by genre
+ * @param {object[]} items
+ * @param {string} genreId
+ * @returns {object[]}
+ */
+
+function filterByGenre(items, genreId) {
+  if (genreId === 'all') return items;
+  const id = Number(genreId);
+  if (isNaN(id)) return items;
+  return items.filter(item => item.genres.includes(id));
+}
