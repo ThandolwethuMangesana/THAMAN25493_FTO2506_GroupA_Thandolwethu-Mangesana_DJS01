@@ -64,3 +64,26 @@ function createTags(genreIds = []) {
   });
   return tagContainer;
 }
+
+/**
+ * open modals for podcast details
+ * @param {Object} podcast - Podcast data object.
+ * @param {'podcast'|'genre'} [type='podcast'] - Type of modal to open.
+ */
+function openModal(item, type = 'podcast') {
+  podcastModal.open(item, type === 'genre');
+}
+
+/**
+ * create podcast card
+ * @param {object} item - Podcast data object.
+ * @returns {HTMLElement} - Podcast card element.
+ */
+
+function createCard(item, type = 'podcast') {
+  if (type === 'podcast') {
+    const cover = createElement('div', {
+      className: 'cover',
+      children: [createElement('img', { attrs: { src: item.image, alt: `${item.title} Cover` } })]
+    });
+ 
