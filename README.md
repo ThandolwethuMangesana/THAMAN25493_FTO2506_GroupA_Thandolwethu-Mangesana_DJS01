@@ -1,8 +1,11 @@
-# DJS01: Vanilla JS Podcast App
+#  Podcast Stream
+
+Podcast Stream is a responsive, accessible, and interactive web app that allows users to discover and explore podcasts with ease.
+It was built with vanilla HTML, CSS, and JavaScript, and emphasizes clean code structure, usability, and a polished user interface.
 
 ## Overview
 
-You will design and build a responsive web application that allows users to **browse podcast shows** on a landing page and **view detailed information** in a modal. The application should display clear, concise previews of podcast shows and offer additional information through a modal pop-up, **all without navigating away from the page**. Your app should showcase clean code architecture and strong UI/UX design while following JavaScript best practices.
+the goal was to design and build a responsive web application that allows users to **browse podcast shows** on a landing page and **view detailed information** in a modal. The application should display clear, concise previews of podcast shows and offer additional information through a modal pop-up, **all without navigating away from the page**. Your app should showcase clean code architecture and strong UI/UX design while following JavaScript best practices.
 
 ---
 
@@ -31,39 +34,48 @@ You will design and build a responsive web application that allows users to **br
   - Number of episodes in each season
 - Include a clear and accessible way to **close the modal**.
 
-### 3. Code Architecture & Best Practices
-
-- Use **object-oriented programming (OOP)** where appropriate.
-- Apply **functional programming principles** to ensure modularity and predictability.
-- Follow **SOLID design principles** for clean, maintainable code.
-- Abstract repeated logic into **reusable functions or classes**.
-- Add **JSDoc comments** for major functions and modules.
+---
+### 📱 Responsive Design
+- **Desktop:** Grid supports up to 8 podcasts per row with two rows visible.
+- **Tablet:** Grid adapts to 2–4 cards per row.
+- **Mobile:** Grid collapses into 1–2 cards per row for readability.
+- Modal scales fluidly to fit smaller screens.
 
 ---
 
 ## Technical Requirements
 
-- Use **HTML, CSS (or Tailwind), and JavaScript**.
-- No page reloads: Use JavaScript to handle modal behaviour and data rendering.
-- Ensure all UI states (modal open/close, hover effects, etc.) work smoothly.
-- Ensure all data is displayed in a **readable and accessible format**.
+[![HTML5](https://img.shields.io/badge/-HTML5-E34F26?logo=html5)](https://developer.mozilla.org/en-US/docs/Web/HTML) 
+[![CSS3](https://img.shields.io/badge/-CSS3-1572B6?logo=css3)](https://developer.mozilla.org/en-US/docs/Web/CSS) 
+[![JavaScript](https://img.shields.io/badge/-JavaScript-323330?logo=javascript)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
 ---
 
-## Design & UX Goals
+## Podcast Modal
 
-- Visually appealing UI with clear layout and hierarchy.
-- Use a consistent **colour scheme, typography, spacing, and sizing**.
-- Accessibility considerations (contrast, font readability, responsive buttons).
-- App should be fully **responsive** on desktop, tablet, and mobile.
+- Opens when a card is clicked or focused + Enter pressed.
+- Contains:
+  - arge podcast cover image
+  - Title & description
+  - Genre tags styled as pills
+  - Last updated information
+  - Seasons list with episode counts
+- If no seasons are available, the modal gracefully informs the user.
+- Modal can be dismissed by:
+  - Clicking the close button
+  - Clicking the overlay background
+  - Pressing the Esc key
 
-Make sure to dive into the wireframe reference images folder for guidance on how to build the UI structure. Note that the UI wireframes for both Desktop and Mobile are included.  
 
-![alt text](<wireframe reference images/desktop view/desktop_modal_view.png>)
 
 ---
 
-## Deliverables
-
-- A fully functional, responsive podcast preview web application.
-- Clean, well-commented source code (HTML, CSS, JS).
+```plaintext
+PodcastExplorer/
+│
+├── index.html      # Main HTML template
+├── styles.css      # Stylesheet for layout, grid, modal, and responsiveness
+├── data.js         # Dataset with podcasts, genres, and seasons
+├── modals.js       #  Core application logic( modal handling)
+├── app.js          # Core application logic (rendering, filtering, sorting)
+└── README.md       # Documentation
