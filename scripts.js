@@ -107,3 +107,17 @@ function createCard(item, type = 'podcast') {
     });
   }
 }
+
+/**
+ * render list of items to the grid
+ *  * @param {Object[]} items
+ * @param {'podcast'|'genre'} [type='podcast']
+ */
+function renderItems(items, type = 'podcast') {
+  grid.innerHTML = '';
+  if (items.length === 0) {
+    grid.appendChild(createElement('p', { content: 'No items found.' }));
+    return;
+  }
+  items.forEach(item => grid.appendChild(createCard(item, type)));
+}
